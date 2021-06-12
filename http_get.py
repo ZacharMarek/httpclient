@@ -55,44 +55,41 @@ if (typ in ht):
 		stat_cislo=d[1]
 		stat_txt=d[0]
 		
-		
 		while l != "":
 			hdr,data=nacit(l)
 			headre={}
 			headre[hdr]=data
 			l=f.readline().decode("ASCII").strip()
 			
-			if stat_cislo=="200":
-				break
-			
-			elif stat_cislo==("301"or"302"or"303"or"307"or"308"):
-			
+		if stat_cislo=="200":
+			break
+		elif stat_cislo==("301"or"302"or"303"or"307"or"308"):
 				typ,hostname,path=nac_url(headre["location"])
 				f.close()
 				s.close()
 		
-			else:
+		else:
 				sys.stderr.write(stat_cislo + stat_txt)
 				f.close()
 				s.close()
 				sys.exit(1)
 				break
 			
-if stat_cislo=="200":
-	for i in headre:
-		if i=="content-length":
-			dlzka=int(headre["content-length"])
-			data=f.read(dlzka).decode("ASCII")
-			sys.stdout.buffer.write(obsah)
-			break
-		elif i=="transfer-encoding":
-			while True:
-				dlzka=f.readline().decode("ASCII")
-				d=int(dlzka,16)
-				data=f.read(d)
-				sys.stdout.buffer.write(data)
-			if not data:
+	if stat_cislo=="200":
+		for i in headre:
+			if i=="content-length":
+				dlzka=int(headre["content-length"])
+				data=f.read(dlzka).decode("ASCII")
+				sys.stdout.buffer.write(obsah)
 				break
+			elif i=="transfer-encoding":
+				while True:
+					dlzka=f.readline().decode("ASCII")
+					d=int(dlzka,16)
+					data=f.read(d)
+					sys.stdout.buffer.write(data)
+					if not data:
+							break
 	f.readline()	
 	f.flush()
 	f.close()
