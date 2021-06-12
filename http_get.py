@@ -80,7 +80,7 @@ if (typ in ht):
 			if i=="content-length":
 				dlzka=int(headre["content-length"])
 				data=f.read(dlzka).decode("ASCII")
-				sys.stdout.buffer.write(obsah)
+				sys.stdout.buffer.write(data)
 				break
 			elif i=="transfer-encoding":
 				while True:
