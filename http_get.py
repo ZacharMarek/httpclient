@@ -76,10 +76,10 @@ if (typ in ht):
 				break
 			
 	if stat_cislo=="200":
-		for i in headre:
+		for i in headre.keys():
 			if i=="content-length":
 				dlzka=int(headre["content-length"])
-				data=f.read(dlzka).decode("ASCII")
+				data=f.read(dlzka)
 				sys.stdout.buffer.write(data)
 				break
 			elif i=="transfer-encoding":
@@ -87,10 +87,11 @@ if (typ in ht):
 					dlzka=f.readline().decode("ASCII")
 					d=int(dlzka,16)
 					data=f.read(d)
+					if not date:
+						break
 					sys.stdout.buffer.write(data)
-					if not data:
-							break
-	f.readline()	
+						f.readline()
+							break	
 	f.flush()
 	f.close()
 	s.close()
